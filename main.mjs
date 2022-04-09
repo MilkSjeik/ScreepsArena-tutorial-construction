@@ -3,24 +3,19 @@ import { Creep, StructureContainer, StructureTower, ConstructionSite  } from '/g
 import { RESOURCE_ENERGY, ERR_NOT_IN_RANGE, ERR_INVALID_TARGET } from '/game/constants';
 // import { } from '/arena';
 
-//let constructionSite;
-
 export function loop() {
     const myCreeps = getObjectsByPrototype(Creep).filter(creep => creep.my);
     const containers = getObjectsByPrototype(StructureContainer);
 
     myCreeps.forEach(myCreep => {
         const constructionSite = getObjectsByPrototype(ConstructionSite).find(i => i.my);
-        
+
         if(!constructionSite) {
-            //createConstructionSite(50,55, StructureTower);
             const container = findClosestByPath(myCreep, containers);
 
             // TODO: loop until valid location is found.
 
             constructionSite = createConstructionSite({x: container.x + 5, y: container.y}, StructureTower);
-            //constructionSite = createConstructionSite(container.x + 5, container.y, StructureTower);
-            //console.log("Construction site: " + JSON.stringify(constructionSite));
         }
 
         console.log("Free creep capacity: " + myCreep.store.getFreeCapacity(RESOURCE_ENERGY));
@@ -33,7 +28,6 @@ export function loop() {
             }
         } else {
             console.log("Build Time!");
-            //console.log("constructionSite: " + JSON.stringify(constructionSite));
             const rc = myCreep.build(constructionSite);
             
             if(rc == ERR_NOT_IN_RANGE) {
